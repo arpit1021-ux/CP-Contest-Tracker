@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "CP Contest Tracker",
+  "version": "1.1.0",
+  "description": "Track upcoming competitive programming contests from Codeforces, CodeChef, AtCoder, and LeetCode with desktop notifications.",
+  "author": "Arpit Singh",
+  "permissions": [
+    "alarms",
+    "notifications",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://codeforces.com/*",
+    "https://www.codechef.com/*",
+    "https://atcoder.jp/*",
+    "https://leetcode.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "open-popup": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+1",
+        "mac": "Command+Shift+1"
+      },
+      "description": "Open CP Contest Tracker"
+    }
+  }
+}
