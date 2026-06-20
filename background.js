@@ -271,6 +271,14 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     doRefresh().then(() => sendResponse({ ok: true }));
     return true;
   }
+  if (msg.action === 'updateBadge') {
+    (async () => {
+      const { contests = [] } = await chrome.storage.local.get('contests');
+      const prefs = await getPrefs();
+      const filtered = filterContests(contests, prefs);
+      await updateBadge(filtered);
+    })();
+  }
 });
 
 chrome.notifications.onButtonClicked.addListener(async (notifId, buttonIndex) => {

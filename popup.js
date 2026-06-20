@@ -158,6 +158,7 @@ async function loadSettings() {
         updated = current.filter(p => p !== platform);
       }
       await chrome.storage.local.set({ enabledPlatforms: updated });
+      chrome.runtime.sendMessage({ action: 'updateBadge' });
     });
     toggles.appendChild(row);
   });

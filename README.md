@@ -15,7 +15,6 @@ A Chrome extension to track upcoming competitive programming contests with deskt
 - Countdown timers for each contest
 - Desktop notifications before contests (configurable: 5/15/30/60 min)
 - Platform filtering to toggle which platforms to show
-- Dark/light theme matching system preference
 
 ## Installation
 
