@@ -17,10 +17,31 @@ A Chrome extension to track upcoming competitive programming contests with deskt
 - Platform filtering to toggle which platforms to show
 - Dark/light theme matching system preference
 
-## Install
+## Installation
 
-1. Open `chrome://extensions` in Chrome
-2. Enable **Developer mode**
-3. Click **Load unpacked** and select this folder
+### Option 1: Download ZIP (Recommended)
+
+1. Click the **Code** button above and select **Download ZIP**
+2. Extract the downloaded `CP-Contest-Tracker.zip` file
+3. Open Chrome and go to `chrome://extensions`
+4. Enable **Developer mode** (toggle in the top-right corner)
+5. Click **Load unpacked** and select the extracted folder
+6. The extension icon will appear in your toolbar — click it to start!
+
+### Option 2: Clone the Repository
+
+```bash
+git clone https://github.com/arpit1021-ux/CP-Contest-Tracker.git
+```
+
+Then follow steps 3–6 above, selecting the cloned folder.
+
+## Permissions
+
+| Permission     | Purpose                                      |
+| -------------- | -------------------------------------------- |
+| `alarms`       | Schedule periodic contest checks             |
+| `notifications`| Send desktop notifications before contests   |
+| `storage`      | Save user preferences (platforms, notify time)|
 
 ## Built by Arpit Singh
