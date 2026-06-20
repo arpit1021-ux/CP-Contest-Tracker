@@ -196,6 +196,13 @@ async function scheduleReminders(contests, reminderMinutes) {
 async function doRefresh() {
   try {
     const contests = await fetchContests();
+    if (contests.length === 0) {
+      const { contests: existing = [] } = await chrome.storage.local.get('contests');
+      if (existing.length > 0) {
+        console.log(`CP Tracker: fetch returned 0 contests, keeping ${existing.length} cached`);
+        return;
+      }
+    }
     await storeContests(contests);
     const prefs = await getPrefs();
     const filtered = filterContests(contests, prefs);
@@ -256,6 +263,13 @@ chrome.notifications.onClicked.addListener(async (notifId) => {
     const contest = contests.find(c => c.id === contestId);
     if (contest?.url) chrome.tabs.create({ url: contest.url });
     await chrome.notifications.clear(notifId);
+  }
+});
+
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+  if (msg.action === 'refresh') {
+    doRefresh().then(() => sendResponse({ ok: true }));
+    return true;
   }
 });
 

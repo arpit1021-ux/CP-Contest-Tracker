@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "CP Contest Tracker",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Track upcoming competitive programming contests from Codeforces, CodeChef, AtCoder, and LeetCode with desktop notifications.",
   "author": "Arpit Singh",
   "permissions": [

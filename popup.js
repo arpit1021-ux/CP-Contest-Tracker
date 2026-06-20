@@ -94,6 +94,12 @@ function showStatus(text) {
   $('status-bar').classList.remove('hidden');
 }
 
+async function triggerRefresh() {
+  return new Promise(resolve => {
+    chrome.runtime.sendMessage({ action: 'refresh' }, () => resolve());
+  });
+}
+
 async function loadContests() {
   showView('loading');
   try {
@@ -177,6 +183,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   $('retry-btn').addEventListener('click', () => loadContests());
+
+  $('refresh-btn').addEventListener('click', async () => {
+    showView('loading');
+    await triggerRefresh();
+    await loadContests();
+  });
 
   setInterval(() => {
     if (!settingsOpen) loadContests();
