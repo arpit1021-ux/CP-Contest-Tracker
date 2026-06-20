@@ -53,7 +53,6 @@ async function fetchCodeChef() {
     const res = await fetchWithTimeout('https://www.codechef.com/api/list/contests/all');
     if (!res.ok) return [];
     const json = await res.json();
-    const now = Date.now();
     return (json.future_contests || []).map(c => {
       const startMs = new Date(c.contest_start_date_iso).getTime();
       const endMs = new Date(c.contest_end_date_iso).getTime();
@@ -198,17 +197,13 @@ async function doRefresh() {
     const contests = await fetchContests();
     if (contests.length === 0) {
       const { contests: existing = [] } = await chrome.storage.local.get('contests');
-      if (existing.length > 0) {
-        console.log(`CP Tracker: fetch returned 0 contests, keeping ${existing.length} cached`);
-        return;
-      }
+      if (existing.length > 0) return;
     }
     await storeContests(contests);
     const prefs = await getPrefs();
     const filtered = filterContests(contests, prefs);
     await updateBadge(filtered);
     await scheduleReminders(filtered, prefs.reminderMinutes);
-    console.log(`CP Tracker: fetched ${contests.length} contests`);
   } catch (err) {
     console.error('CP Tracker fetch error:', err);
   }
@@ -277,6 +272,14 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
       const prefs = await getPrefs();
       const filtered = filterContests(contests, prefs);
       await updateBadge(filtered);
+    })();
+  }
+  if (msg.action === 'rescheduleReminders') {
+    (async () => {
+      const { contests = [] } = await chrome.storage.local.get('contests');
+      const prefs = await getPrefs();
+      const filtered = filterContests(contests, prefs);
+      await scheduleReminders(filtered, prefs.reminderMinutes);
     })();
   }
 });

@@ -166,6 +166,7 @@ async function loadSettings() {
   $('reminder-select').value = String(reminderMinutes);
   $('reminder-select').addEventListener('change', async () => {
     await chrome.storage.local.set({ reminderMinutes: parseInt($('reminder-select').value) });
+    chrome.runtime.sendMessage({ action: 'rescheduleReminders' });
   });
 }
 
